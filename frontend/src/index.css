@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+body{
+  background-color: black;
+  height: 100%;
+  scroll-behavior: auto; /* Let Lenis take over */
+       /* Lenis handles scrolling */
+}
+
+@theme {
+  --breakpoint-1050: 1050px;
+  --breakpoint-2xl: 100rem;
+  --breakpoint-3xl: 120rem;
+}
+
+
+#lora400 {
+  font-family: "Lora", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+#rubik500 {
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@media (max-width: 1050px) {
+  #big-screen {
+    display: none;
+  }
+}
