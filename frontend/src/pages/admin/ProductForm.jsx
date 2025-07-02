@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import watchPic from '../../images/watchhomepage.jpg';
 
 export default function ProductForm() {
     
+  const imageRef = useRef(null);
+
   const navigate = useNavigate();
   const [product, setProduct] = useState({
     name: '',
@@ -58,23 +61,50 @@ export default function ProductForm() {
 
     try {
       await axios.post(
-        'http://localhost:5000/api/products',
+        `${import.meta.env.VITE_API_URL}/api/products`,
         { ...product, image: imageUrl },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
-      );
+        );
       navigate('/dashboard'); // Or refresh product list
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to add product');
     }
   };
 
+  const handleMouseMove = (e) => {
+    const img = imageRef.current;
+    const rect = img.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 100;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 100;
+
+    img.style.transform = `scale(1.25) translate(${x}px, ${y}px)`;
+  };
+
+  const resetTransform = () => {
+    const img = imageRef.current;
+    img.style.transform = 'scale(1) translate(0, 0)';
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 p-6 flex items-center justify-center">
+        <div
+               className="w-screen h-screen bg-black/80 overflow-hidden relative z-5" 
+               onMouseMove={handleMouseMove}
+               onMouseLeave={resetTransform}
+                >
+                    <img
+                      ref={imageRef}
+                      src={watchPic}
+                      alt="Watch Login"
+                      className="w-full h-full object-cover object-center transition-transform duration-300 ease-out pointer-events-none select-none"
+                      draggable="false"
+                      onContextMenu={(e) => e.preventDefault()}
+                      onMouseDown={(e) => e.preventDefault()}
+                    />
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-xl shadow-md space-y-4 w-full max-w-lg"
+        className="bg-[#020202] text-white p-6 rounded-[5px] shadow-md space-y-4 w-full max-w-lg z-20 absolute top-[30%] left-[35%] max-[1000px]:left-[0px] max-[1000px]:scale-85"
       >
         <h2 className="text-xl font-bold">Add New Product</h2>
 
@@ -107,13 +137,13 @@ export default function ProductForm() {
           type="file"
           accept="image/*"
           onChange={(e) => setImage(e.target.files[0])}
-          className="w-full"
+          className="cursor-pointer bg-white text-black rounded-[6px] max-w-[220px] p-2 px-2 hover:scale-110 duration-200"
         />
 
         <button
           type="submit"
           disabled={uploading}
-          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 cursor-pointer"
         >
           {uploading ? 'Uploading...' : 'Add Product'}
         </button>

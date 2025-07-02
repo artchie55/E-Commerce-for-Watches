@@ -20,7 +20,7 @@ export default function Cart() {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/cart', {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/cart`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCart(res.data.items || []);
@@ -38,7 +38,7 @@ export default function Cart() {
   const handleCheckout = async () => {
     try {
       const res = await axios.post(
-        'http://localhost:5000/api/stripe/create-checkout-session',
+        `${import.meta.env.VITE_API_URL}/api/stripe/create-checkout-session`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -52,7 +52,7 @@ export default function Cart() {
     setCart(items);
     try {
       await axios.post(
-        'http://localhost:5000/api/cart',
+        `${import.meta.env.VITE_API_URL}/api/cart`,
         {
           items: items.map(({ product, quantity }) => ({
             product: product._id || product,
