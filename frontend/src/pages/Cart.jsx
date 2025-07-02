@@ -116,7 +116,7 @@ export default function Cart() {
                   className="w-20 h-20 object-cover rounded"
                 />
                 <div>
-                  <h2 className="font-semibold text-lg ">{item.product.name}</h2>
+                  <h2 className="font-semibold text-lg text-black">{item.product.name}</h2>
                   <p className="text-gray-600">
                     ${item.product.price} × {item.quantity} = $
                     {(item.product.price * item.quantity).toFixed(2)}
