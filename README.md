@@ -4,8 +4,8 @@ E-commerce-for-Watches is a premium e-commerce platform built with React and Tai
 PS. don't delete the products TY, you can just add your test product on admin dashboard and delete that.
 
 accouts: 
-      admin@gmail.com:admin    role=admin
-      user@gmail.com:user      role=customer
+admin@gmail.com:admin       role=admin
+user@gmail.com:user         role=customer
 
 
 Test Stripe Card:
